@@ -11,92 +11,56 @@ namespace Learn4
     class Program
     {
         const string Path = "test.txt";
-        
+
         //test
         static void Main(string[] args)
         {
-            User user = new User();
-            int indexUser;
-            string str;
-            List<User> users;
+            
 
-            do
+            
+
+
+            while (true)
             {
+                Console.Clear();
 
-                users = ReadAllUsers();
-                user.SetLogin();
-                indexUser = GetUserIndex(user, users); //если игрок с таким логином существует - возращает его индекс в массиве
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Выберите варианты и введите соответсвующую цифру.");
+                Console.WriteLine("1 - Выход");
+                Console.WriteLine("2 - Играть со вторым игроком");
+                Console.WriteLine("3 - Играть с компьютером");
+                Console.WriteLine("4 - Показать счёт");
+                Console.WriteLine("5 - Сменить учётную запись (войти под другим логином)");
+                Console.ForegroundColor = ConsoleColor.White;
+                var option = Console.ReadLine();
 
-                if (indexUser == -1) //если игрока c таким логином нет массиве
+                switch (option)
                 {
-                    Console.WriteLine($"Игрок с логином {user.Login} не существует.");
-                    Console.WriteLine($"Для создания игрока с логином {user.Login} нажмите 1, для повторного ввода логина - ввод");
-                    str = Console.ReadLine();
-
-                    if (str == "1")
-                    {
-                        user.SetPass();
-                        CreateUser(user);
-                        users = ReadAllUsers();
-                        indexUser = GetUserIndex(user, users);
-                        Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
-                    }
-                }
-
-                else
-                {
-                    do
-                    {
-                        user.SetPass();
-                        if (user.Password != users[indexUser].Password)
-                        {
-                            Console.WriteLine($"Неверный пароль для логина {user.Login}.");
-                        }
-                    } while (user.Password != users[indexUser].Password);
-
-                    Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
-                }
-
-            } while (indexUser == -1);
-
-
-             while (true)
-             {
-                 Console.Clear();
-
-                 Console.ForegroundColor = ConsoleColor.Green;
-                 Console.WriteLine("Выберите варианты и введите соответсвующую цифру.");
-                 Console.WriteLine("1 - Выход");
-                 Console.WriteLine("2 - Играть со вторым игроком");
-                 Console.WriteLine("3 - Играть с компьютером");
-                 Console.WriteLine("4 - Показать счёт");
-                 Console.WriteLine("5 - Сменить учётную запись (войти под другим логином)");
-                 Console.ForegroundColor = ConsoleColor.White;
-                 var option = Console.ReadLine();
-                                  
-                 switch (option)
-                 {
-                     case "1":
-                         return;//Exit from Applicaation
-                     case "2":
-                         Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        user.Score = user.Score+PlayGame("2");
-                         break;
-                     case "3":
-                         Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        user.Score = user.Score+PlayGame("3");
+                    case "1":
+                        return;//Exit from Applicaation
+                    case "2":
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        user.Score = user.Score + PlayGame("2");
                         break;
-                     case "4":
-                         Console.ForegroundColor = ConsoleColor.Red;
-                         Console.WriteLine($"{user.Login} cчёт в игре: { user.Score}");
-                         
-                         break;
-                     
-                     
-                 }
-             }
+                    case "3":
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        user.Score = user.Score + PlayGame("3");
+                        break;
+                    case "4":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{user.Login} cчёт в игре: { user.Score}");
 
-           
+                        break;
+                    case "5":
+                        user = LoginUser();
+
+                        break;
+
+
+                }
+            }
+
+
         }
 
         public static int PlayGame(string str)
@@ -200,14 +164,14 @@ namespace Learn4
         /// <param name="us"></игрок>
         /// <param name="users"></массив users>
         /// <returns></returns>
-        public static int GetUserIndex (User us, List<User> users)
+        public static int GetUserIndex(User us, List<User> users)
         {
-            
+
             for (int i = 0; i < users.Count; i++)
             {
                 if (us.Login == users[i].Login)
                 {
-                  return i;
+                    return i;
                 }
 
             }
@@ -216,5 +180,53 @@ namespace Learn4
 
         }
 
+        public static User UserLogin() // возвращает юзера
+        {
+            User user = new User();
+            int indexUser;
+            string str;
+            List<User> users;
+
+
+            do
+            {
+
+                users = ReadAllUsers();
+                user.SetLogin();
+                indexUser = GetUserIndex(user, users); //если игрок с таким логином существует - возращает его индекс в массиве
+
+                if (indexUser == -1) //если игрока c таким логином нет массиве
+                {
+                    Console.WriteLine($"Игрок с логином {user.Login} не существует.");
+                    Console.WriteLine($"Для создания игрока с логином {user.Login} нажмите 1, для повторного ввода логина - ввод");
+                    str = Console.ReadLine();
+
+                    if (str == "1")
+                    {
+                        user.SetPass();
+                        CreateUser(user);
+                        users = ReadAllUsers();
+                        indexUser = GetUserIndex(user, users);
+                        Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
+                    }
+                }
+
+                else
+                {
+                    do
+                    {
+                        user.SetPass();
+                        if (user.Password != users[indexUser].Password)
+                        {
+                            Console.WriteLine($"Неверный пароль для логина {user.Login}.");
+                        }
+                    } while (user.Password != users[indexUser].Password);
+
+                    Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
+                }
+
+            } while (indexUser == -1);
+
+        }
     }
 }

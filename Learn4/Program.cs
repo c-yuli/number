@@ -15,47 +15,9 @@ namespace Learn4
         //test
         static void Main(string[] args)
         {
-            User user = new User();
-            int indexUser;
-            string str;
-            List<User> users;
+            
 
-            do
-            {
-                users = ReadAllUsers();
-                user.SetLogin();
-                indexUser = GetUserIndex(user, users); //если игрок с таким логином существует - возращает его индекс в массиве
-
-                if (indexUser == -1) //если игрока c таким логином нет массиве
-                {
-                    Console.WriteLine($"Игрок с логином {user.Login} не существует.");
-                    Console.WriteLine($"Для создания игрока с логином {user.Login} нажмите 1, для повторного ввода логина - ввод");
-                    str = Console.ReadLine();
-
-                    if (str == "1")
-                    {
-                        user.SetPass();
-                        CreateUser(user);
-                        users = ReadAllUsers();
-                        indexUser = GetUserIndex(user, users);
-                        Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
-                    }
-                }
-                else
-                {
-                    do
-                    {
-                        user.SetPass();
-                        if (user.Password != users[indexUser].Password)
-                        {
-                            Console.WriteLine($"Неверный пароль для логина {user.Login}.");
-                        }
-                    } while (user.Password != users[indexUser].Password);
-
-                    Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
-                }
-
-            } while (indexUser == -1);
+            
 
 
             while (true)
@@ -83,13 +45,14 @@ namespace Learn4
                     case "3":
                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                         user.Score = user.Score + PlayGame("3");
-
-                        UpdateUser(user);
-
                         break;
                     case "4":
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"{user.Login} cчёт в игре: { user.Score}");
+
+                        break;
+                    case "5":
+                        user = LoginUser();
 
                         break;
 
@@ -191,30 +154,7 @@ namespace Learn4
                 var listJson = new List<string>(); // массив строк. Зачем он?
                 listJson.Add(json); //Зачем это? Ведь создаётся и добавляется в файл один user?
                 File.AppendAllLines(Path, listJson); //добавление в текст файл все строки из массива listJson
-            }
-        }
 
-        public static void UpdateUser(User updatedUser)
-        {
-            var users = ReadAllUsers();
-
-            for (int i = 0; i < users.Count; i++)
-            {
-                var userFromDb = users[i];
-                if (userFromDb.Login == updatedUser.Login)
-                {
-                    users[i] = updatedUser;
-                }
-            }
-
-            //В массиве users лежат Хорошие
-            //Но файл всё ещё содержит старые данные
-
-            File.Delete(Path);
-
-            for (int i = 0; i < users.Count; i++)
-            {
-                CreateUser(users[i]);
             }
         }
 
@@ -240,5 +180,53 @@ namespace Learn4
 
         }
 
+        public static User UserLogin() // возвращает юзера
+        {
+            User user = new User();
+            int indexUser;
+            string str;
+            List<User> users;
+
+
+            do
+            {
+
+                users = ReadAllUsers();
+                user.SetLogin();
+                indexUser = GetUserIndex(user, users); //если игрок с таким логином существует - возращает его индекс в массиве
+
+                if (indexUser == -1) //если игрока c таким логином нет массиве
+                {
+                    Console.WriteLine($"Игрок с логином {user.Login} не существует.");
+                    Console.WriteLine($"Для создания игрока с логином {user.Login} нажмите 1, для повторного ввода логина - ввод");
+                    str = Console.ReadLine();
+
+                    if (str == "1")
+                    {
+                        user.SetPass();
+                        CreateUser(user);
+                        users = ReadAllUsers();
+                        indexUser = GetUserIndex(user, users);
+                        Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
+                    }
+                }
+
+                else
+                {
+                    do
+                    {
+                        user.SetPass();
+                        if (user.Password != users[indexUser].Password)
+                        {
+                            Console.WriteLine($"Неверный пароль для логина {user.Login}.");
+                        }
+                    } while (user.Password != users[indexUser].Password);
+
+                    Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
+                }
+
+            } while (indexUser == -1);
+
+        }
     }
 }

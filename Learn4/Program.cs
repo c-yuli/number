@@ -158,6 +158,24 @@ namespace Learn4
             }
         }
 
+        public static void UpdateUser(User updatedUser)
+        {
+            var users = ReadAllUsers();
+            for (int i = 0; i < users.Count; i++)
+            {
+                if (users[i].Login == updatedUser.Login)
+                {
+                    users[i] = updatedUser;
+                }
+            }
+
+            File.Delete(Path);
+            foreach (var user in users)
+            {
+                CreateUser(user);
+            }
+        }
+
         /// <summary>
         /// Если игрок с таким логином существует, - возращает его индекс в массиве users, если нет - то возарщает -1
         /// </summary>

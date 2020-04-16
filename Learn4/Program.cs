@@ -11,7 +11,7 @@ namespace Learn4
     class Program
     {
         const string Path = "test.txt";
-        
+
         //test
         static void Main(string[] args)
         {
@@ -22,7 +22,6 @@ namespace Learn4
 
             do
             {
-
                 users = ReadAllUsers();
                 user.SetLogin();
                 indexUser = GetUserIndex(user, users); //если игрок с таким логином существует - возращает его индекс в массиве
@@ -42,7 +41,6 @@ namespace Learn4
                         Console.WriteLine($"{user.Login}, добро пожаловать в игру!");
                     }
                 }
-
                 else
                 {
                     do
@@ -60,43 +58,46 @@ namespace Learn4
             } while (indexUser == -1);
 
 
-             while (true)
-             {
-                 Console.Clear();
+            while (true)
+            {
+                Console.Clear();
 
-                 Console.ForegroundColor = ConsoleColor.Green;
-                 Console.WriteLine("Выберите варианты и введите соответсвующую цифру.");
-                 Console.WriteLine("1 - Выход");
-                 Console.WriteLine("2 - Играть со вторым игроком");
-                 Console.WriteLine("3 - Играть с компьютером");
-                 Console.WriteLine("4 - Показать счёт");
-                 Console.WriteLine("5 - Сменить учётную запись (войти под другим логином)");
-                 Console.ForegroundColor = ConsoleColor.White;
-                 var option = Console.ReadLine();
-                                  
-                 switch (option)
-                 {
-                     case "1":
-                         return;//Exit from Applicaation
-                     case "2":
-                         Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        user.Score = user.Score+PlayGame("2");
-                         break;
-                     case "3":
-                         Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        user.Score = user.Score+PlayGame("3");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Выберите варианты и введите соответсвующую цифру.");
+                Console.WriteLine("1 - Выход");
+                Console.WriteLine("2 - Играть со вторым игроком");
+                Console.WriteLine("3 - Играть с компьютером");
+                Console.WriteLine("4 - Показать счёт");
+                Console.WriteLine("5 - Сменить учётную запись (войти под другим логином)");
+                Console.ForegroundColor = ConsoleColor.White;
+                var option = Console.ReadLine();
+
+                switch (option)
+                {
+                    case "1":
+                        return;//Exit from Applicaation
+                    case "2":
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        user.Score = user.Score + PlayGame("2");
                         break;
-                     case "4":
-                         Console.ForegroundColor = ConsoleColor.Red;
-                         Console.WriteLine($"{user.Login} cчёт в игре: { user.Score}");
-                         
-                         break;
-                     
-                     
-                 }
-             }
+                    case "3":
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        user.Score = user.Score + PlayGame("3");
 
-           
+                        UpdateUser(user);
+
+                        break;
+                    case "4":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{user.Login} cчёт в игре: { user.Score}");
+
+                        break;
+
+
+                }
+            }
+
+
         }
 
         public static int PlayGame(string str)
@@ -190,7 +191,30 @@ namespace Learn4
                 var listJson = new List<string>(); // массив строк. Зачем он?
                 listJson.Add(json); //Зачем это? Ведь создаётся и добавляется в файл один user?
                 File.AppendAllLines(Path, listJson); //добавление в текст файл все строки из массива listJson
+            }
+        }
 
+        public static void UpdateUser(User updatedUser)
+        {
+            var users = ReadAllUsers();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                var userFromDb = users[i];
+                if (userFromDb.Login == updatedUser.Login)
+                {
+                    users[i] = updatedUser;
+                }
+            }
+
+            //В массиве users лежат Хорошие
+            //Но файл всё ещё содержит старые данные
+
+            File.Delete(Path);
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                CreateUser(users[i]);
             }
         }
 
@@ -200,14 +224,14 @@ namespace Learn4
         /// <param name="us"></игрок>
         /// <param name="users"></массив users>
         /// <returns></returns>
-        public static int GetUserIndex (User us, List<User> users)
+        public static int GetUserIndex(User us, List<User> users)
         {
-            
+
             for (int i = 0; i < users.Count; i++)
             {
                 if (us.Login == users[i].Login)
                 {
-                  return i;
+                    return i;
                 }
 
             }

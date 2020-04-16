@@ -1,0 +1,6 @@
+C:\Users\user101\source\repos\Learn2\Learn2\bin\Debug\Learn2.exe.config
+C:\Users\user101\source\repos\Learn2\Learn2\bin\Debug\Learn2.exe
+C:\Users\user101\source\repos\Learn2\Learn2\bin\Debug\Learn2.pdb
+C:\Users\user101\source\repos\Learn2\Learn2\obj\Debug\Learn2.csprojAssemblyReference.cache
+C:\Users\user101\source\repos\Learn2\Learn2\obj\Debug\Learn2.exe
+C:\Users\user101\source\repos\Learn2\Learn2\obj\Debug\Learn2.pdb

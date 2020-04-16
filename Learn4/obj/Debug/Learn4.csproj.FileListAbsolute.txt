@@ -1,0 +1,7 @@
+C:\Users\user101\source\repos\Learn2\Learn4\bin\Debug\Learn4.exe.config
+C:\Users\user101\source\repos\Learn2\Learn4\bin\Debug\Learn4.exe
+C:\Users\user101\source\repos\Learn2\Learn4\bin\Debug\Learn4.pdb
+C:\Users\user101\source\repos\Learn2\Learn4\obj\Debug\Learn4.csprojAssemblyReference.cache
+C:\Users\user101\source\repos\Learn2\Learn4\obj\Debug\Learn4.exe
+C:\Users\user101\source\repos\Learn2\Learn4\obj\Debug\Learn4.pdb
+C:\Users\user101\source\repos\Learn2\Learn4\obj\Debug\Learn4.csproj.CoreCompileInputs.cache

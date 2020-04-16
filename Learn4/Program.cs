@@ -12,6 +12,7 @@ namespace Learn4
     {
         const string Path = "test.txt";
         
+        //test
         static void Main(string[] args)
         {
             User user = new User();
